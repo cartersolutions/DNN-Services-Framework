@@ -7,8 +7,8 @@ I suggest you use the solution with the latest version of DNN and the default Bo
 <h2>Projects</h2>
 <h3>DNNAwesome</h3>
 This is the DNN module that is installed and contains all the user interface code.
-<br/>
-The mail solution file DNNAwesome.sln is located here.
+<br/><br/>
+The main solution file DNNAwesome.sln is located here.
 <h3>DNNAwesomeService</h3>
 This is the assembly that contains web services exposed by the DNN Services Framework and the Entity Framework
 
