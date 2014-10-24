@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DNNAwesomeService.Data.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DNNAwesome_Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" />
+          <Property Name="City" Type="nvarchar" MaxLength="100" />
+          <Property Name="ZipCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="StatusID" Type="int" />
+        </EntityType>
+        <EntityType Name="DNNAwesome_Order">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DNNAwesome_Status">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_DNNAwesome_Customer_DNNAwesome_Status">
+          <End Role="DNNAwesome_Status" Type="Self.DNNAwesome_Status" Multiplicity="0..1" />
+          <End Role="DNNAwesome_Customer" Type="Self.DNNAwesome_Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DNNAwesome_Status">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="DNNAwesome_Customer">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DNNAwesome_Order_DNNAwesome_Order">
+          <End Role="DNNAwesome_Customer" Type="Self.DNNAwesome_Customer" Multiplicity="1" />
+          <End Role="DNNAwesome_Order" Type="Self.DNNAwesome_Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DNNAwesome_Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="DNNAwesome_Order">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DNNAwesomeServiceDataStoreContainer">
+          <EntitySet Name="DNNAwesome_Customer" EntityType="Self.DNNAwesome_Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DNNAwesome_Order" EntityType="Self.DNNAwesome_Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DNNAwesome_Status" EntityType="Self.DNNAwesome_Status" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DNNAwesome_Customer_DNNAwesome_Status" Association="Self.FK_DNNAwesome_Customer_DNNAwesome_Status">
+            <End Role="DNNAwesome_Status" EntitySet="DNNAwesome_Status" />
+            <End Role="DNNAwesome_Customer" EntitySet="DNNAwesome_Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DNNAwesome_Order_DNNAwesome_Order" Association="Self.FK_DNNAwesome_Order_DNNAwesome_Order">
+            <End Role="DNNAwesome_Customer" EntitySet="DNNAwesome_Customer" />
+            <End Role="DNNAwesome_Order" EntitySet="DNNAwesome_Order" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DNNAwesomeService.Data" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DNNAwesome_Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="StatusID" Type="Int32" />
+          <NavigationProperty Name="DNNAwesome_Status" Relationship="Self.FK_DNNAwesome_Customer_DNNAwesome_Status" FromRole="DNNAwesome_Customer" ToRole="DNNAwesome_Status" />
+          <NavigationProperty Name="DNNAwesome_Order" Relationship="Self.FK_DNNAwesome_Order_DNNAwesome_Order" FromRole="DNNAwesome_Customer" ToRole="DNNAwesome_Order" />
+        </EntityType>
+        <EntityType Name="DNNAwesome_Order">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DNNAwesome_Customer" Relationship="Self.FK_DNNAwesome_Order_DNNAwesome_Order" FromRole="DNNAwesome_Order" ToRole="DNNAwesome_Customer" />
+        </EntityType>
+        <EntityType Name="DNNAwesome_Status">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="DNNAwesome_Customer" Relationship="Self.FK_DNNAwesome_Customer_DNNAwesome_Status" FromRole="DNNAwesome_Status" ToRole="DNNAwesome_Customer" />
+        </EntityType>
+        <Association Name="FK_DNNAwesome_Customer_DNNAwesome_Status">
+          <End Role="DNNAwesome_Status" Type="Self.DNNAwesome_Status" Multiplicity="0..1" />
+          <End Role="DNNAwesome_Customer" Type="Self.DNNAwesome_Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DNNAwesome_Status">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="DNNAwesome_Customer">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DNNAwesome_Order_DNNAwesome_Order">
+          <End Role="DNNAwesome_Customer" Type="Self.DNNAwesome_Customer" Multiplicity="1" />
+          <End Role="DNNAwesome_Order" Type="Self.DNNAwesome_Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DNNAwesome_Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="DNNAwesome_Order">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DNNAwesomeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DNNAwesome_Customer" EntityType="Self.DNNAwesome_Customer" />
+          <EntitySet Name="DNNAwesome_Order" EntityType="Self.DNNAwesome_Order" />
+          <EntitySet Name="DNNAwesome_Status" EntityType="Self.DNNAwesome_Status" />
+          <AssociationSet Name="FK_DNNAwesome_Customer_DNNAwesome_Status" Association="Self.FK_DNNAwesome_Customer_DNNAwesome_Status">
+            <End Role="DNNAwesome_Status" EntitySet="DNNAwesome_Status" />
+            <End Role="DNNAwesome_Customer" EntitySet="DNNAwesome_Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DNNAwesome_Order_DNNAwesome_Order" Association="Self.FK_DNNAwesome_Order_DNNAwesome_Order">
+            <End Role="DNNAwesome_Customer" EntitySet="DNNAwesome_Customer" />
+            <End Role="DNNAwesome_Order" EntitySet="DNNAwesome_Order" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DNNAwesomeServiceDataStoreContainer" CdmEntityContainer="DNNAwesomeEntities">
+          <EntitySetMapping Name="DNNAwesome_Customer">
+            <EntityTypeMapping TypeName="DNNAwesomeService.Data.DNNAwesome_Customer">
+              <MappingFragment StoreEntitySet="DNNAwesome_Customer">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DNNAwesome_Order">
+            <EntityTypeMapping TypeName="DNNAwesomeService.Data.DNNAwesome_Order">
+              <MappingFragment StoreEntitySet="DNNAwesome_Order">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DNNAwesome_Status">
+            <EntityTypeMapping TypeName="DNNAwesomeService.Data.DNNAwesome_Status">
+              <MappingFragment StoreEntitySet="DNNAwesome_Status">
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

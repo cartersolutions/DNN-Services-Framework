@@ -1,0 +1,96 @@
+﻿/************************************************************/
+/*****              SqlDataProvider                     *****/
+/*****                                                  *****/
+/*****                                                  *****/
+/***** Note: To manually execute this script you must   *****/
+/*****       perform a search and replace operation     *****/
+/*****       for {databaseOwner} and {objectQualifier}  *****/
+/*****                                                  *****/
+/************************************************************/
+
+
+
+/************************************************************/
+/*****              SqlDataProvider                     *****/
+/************************************************************/
+
+/****** Object:  Table {databaseOwner}[{objectQualifier}DNNAwesome_Customer]    Script Date: 10/5/2014 12:59:31 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE {databaseOwner}[{objectQualifier}DNNAwesome_Customer](
+	[CustomerID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](50) NULL,
+	[Address] [nvarchar](100) NULL,
+	[City] [nvarchar](100) NULL,
+	[ZipCode] [nvarchar](10) NULL,
+	[StatusID] [int] NULL,
+ CONSTRAINT [PK_DNNAwesome_Customer] PRIMARY KEY CLUSTERED 
+(
+	[CustomerID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+/****** Object:  Table {databaseOwner}[{objectQualifier}DNNAwesome_Order]    Script Date: 10/5/2014 12:59:31 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE {databaseOwner}[{objectQualifier}DNNAwesome_Order](
+	[OrderID] [int] IDENTITY(1,1) NOT NULL,
+	[CustomerID] [int] NOT NULL,
+	[Name] [nvarchar](100) NULL,
+	[DateCreated] [datetime] NULL,
+ CONSTRAINT [PK_DNNAwesome_Ordoer] PRIMARY KEY CLUSTERED 
+(
+	[OrderID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+/****** Object:  Table {databaseOwner}[{objectQualifier}DNNAwesome_Status]    Script Date: 10/5/2014 12:59:31 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE {databaseOwner}[{objectQualifier}DNNAwesome_Status](
+	[StatusID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_DNNAwesome_Status] PRIMARY KEY CLUSTERED 
+(
+	[StatusID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE {databaseOwner}[{objectQualifier}DNNAwesome_Order] ADD  CONSTRAINT [DF_DNNAwesome_Ordoer_DateCreated]  DEFAULT (getdate()) FOR [DateCreated]
+GO
+
+ALTER TABLE {databaseOwner}[{objectQualifier}DNNAwesome_Customer]  WITH CHECK ADD  CONSTRAINT [FK_DNNAwesome_Customer_DNNAwesome_Status] FOREIGN KEY([StatusID])
+REFERENCES {databaseOwner}[{objectQualifier}DNNAwesome_Status] ([StatusID])
+GO
+
+ALTER TABLE {databaseOwner}[{objectQualifier}DNNAwesome_Customer] CHECK CONSTRAINT [FK_DNNAwesome_Customer_DNNAwesome_Status]
+GO
+
+ALTER TABLE {databaseOwner}[{objectQualifier}DNNAwesome_Order]  WITH CHECK ADD  CONSTRAINT [FK_DNNAwesome_Order_DNNAwesome_Order] FOREIGN KEY([CustomerID])
+REFERENCES {databaseOwner}[{objectQualifier}DNNAwesome_Customer] ([CustomerID])
+GO
+
+ALTER TABLE {databaseOwner}[{objectQualifier}DNNAwesome_Order] CHECK CONSTRAINT [FK_DNNAwesome_Order_DNNAwesome_Order]
+GO
+
+/***** Seed Status Table *****/
+INSERT INTO {databaseOwner}[{objectQualifier}DNNAwesome_Status] (Name) VALUES ('Active'),('Deleted')
+GO

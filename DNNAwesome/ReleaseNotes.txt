@@ -1,0 +1,20 @@
+﻿<h3>DNNAwesome</h3>
+<p class="Contributor">
+	Carter Solutions, Inc. <br />
+	<a href="mailto:info@cartersolutions.com">info@cartersolutions.com</a><br />
+	<a href=http://www.cartersolutions.com>http://www.cartersolutions.com</a><br />
+</p>
+<hr/>
+<div class="License">
+	<h3>About the DNNAwesome</h3>
+	<p class="Owner">
+		<b>Version 1.0</b><br /><br />
+	</p>
+	<p>Description about version.</p>
+	
+	<h4>Bug Fixes</h4>
+	<ul>
+			<li>None</li>
+	</ul>
+	
+</div>

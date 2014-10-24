@@ -1,0 +1,35 @@
+﻿/************************************************************/
+/*****              SqlDataProvider                     *****/
+/*****                                                  *****/
+/*****                                                  *****/
+/***** Note: To manually execute this script you must   *****/
+/*****       perform a search and replace operation     *****/
+/*****       for {databaseOwner} and {objectQualifier}  *****/
+/*****                                                  *****/
+/************************************************************/
+
+
+
+/************************************************************/
+/*****              SqlDataProvider                     *****/
+/************************************************************/
+
+ALTER TABLE {databaseOwner}[{objectQualifier}DNNAwesome_Order] DROP CONSTRAINT [FK_DNNAwesome_Order_DNNAwesome_Order]
+GO
+
+ALTER TABLE {databaseOwner}[{objectQualifier}DNNAwesome_Customer] DROP CONSTRAINT [FK_DNNAwesome_Customer_DNNAwesome_Status]
+GO
+
+/****** Object:  Table {databaseOwner}[{objectQualifier}DNNAwesome_Status]    Script Date: 10/5/2014 1:01:57 PM ******/
+DROP TABLE {databaseOwner}[{objectQualifier}DNNAwesome_Status]
+GO
+
+/****** Object:  Table {databaseOwner}[{objectQualifier}DNNAwesome_Order]    Script Date: 10/5/2014 1:01:57 PM ******/
+DROP TABLE {databaseOwner}[{objectQualifier}DNNAwesome_Order]
+GO
+
+/****** Object:  Table {databaseOwner}[{objectQualifier}DNNAwesome_Customer]    Script Date: 10/5/2014 1:01:57 PM ******/
+DROP TABLE {databaseOwner}[{objectQualifier}DNNAwesome_Customer]
+GO
+
+
